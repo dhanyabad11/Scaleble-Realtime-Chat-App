@@ -1,14 +1,25 @@
 import { Server } from "socket.io";
 
 class SocketService {
+    static io: any;
+    static initListeners() {
+        throw new Error("Method not implemented.");
+    }
     private _io: Server;
 
-    constructor(server: any) {
-        this._io = new Server(server);
+    constructor() {
+        console.log("Init Socket Service. . .");
+        this._io = new Server({
+            cors: {
+                allowedHeaders: ["*"],
+                origin: "*",
+            },
+        });
     }
 
     public initListeners() {
-        console.log("Init Socket Listeners...");
+        const io = this.io;
+
         this._io.on("connection", (socket) => {
             console.log("New Socket Connected", socket.id);
 
